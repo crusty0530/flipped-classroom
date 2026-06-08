@@ -1,2 +1,20 @@
-<h1 class="text-3xl font-bold text-blue-500">Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script>
+	import Hero from "../components/landing/Hero.svelte";
+	import WhatIs from "../components/landing/WhatIs.svelte";
+	import WhoAre from "../components/landing/WhoAre.svelte";
+
+</script>
+<div class="inset-0 opacity-5 absolute z-[-1] bgGrid"></div>
+
+<main class="flex flex-col">
+    <Hero />
+    <WhatIs />
+    <WhoAre />
+</main>
+
+<style>
+    .bgGrid {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, grey 1px, transparent 1px), linear-gradient(to bottom, grey 1px, transparent 1px)
+}
+</style>
