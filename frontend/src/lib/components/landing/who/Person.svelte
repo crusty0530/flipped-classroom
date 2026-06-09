@@ -14,5 +14,5 @@
         <img src={pfp} alt={name + "'s headshot"} />
     </a>
     <h3 class="font-bold text-2xl mt-5 mb-1">{name}</h3>
-    <div style="font-style: italic;">{subtitle}</div>
+    <div class="italic">{subtitle}</div>
 </div>
