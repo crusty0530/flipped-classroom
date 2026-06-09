@@ -1,7 +1,7 @@
 <script>
-	import Hero from "../components/landing/Hero.svelte";
-	import WhatIs from "../components/landing/WhatIs.svelte";
-	import WhoAre from "../components/landing/WhoAre.svelte";
+	import Hero from "$lib/components/landing/Hero.svelte";
+	import WhatIs from "$lib/components/landing/WhatIs.svelte";
+	import WhoAre from "$lib/components/landing/WhoAre.svelte";
 
 </script>
 <div class="inset-0 opacity-5 absolute z-[-1] bgGrid"></div>
