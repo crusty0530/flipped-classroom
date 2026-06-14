@@ -2,6 +2,7 @@
 	import Hero from "$lib/components/landing/Hero.svelte";
 	import WhatIs from "$lib/components/landing/WhatIs.svelte";
 	import WhoAre from "$lib/components/landing/WhoAre.svelte";
+    import Footer from "$lib/components/landing/Footer.svelte";
 
 </script>
 <div class="inset-0 opacity-5 absolute z-[-1] bgGrid"></div>
@@ -10,6 +11,7 @@
     <Hero />
     <WhatIs />
     <WhoAre />
+    <Footer />
 </main>
 
 <style>
