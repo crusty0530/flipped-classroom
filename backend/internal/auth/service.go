@@ -40,5 +40,23 @@ func (s *Service) Register(request RegisterRequest) error {
 		return err
 	}
 
-	user := users.User{}
+	user := users.User{
+		Username:     request.Username,
+		Email:        request.Email,
+		PasswordHash: string(hashedPassword),
+		DisplayName:  request.DisplayName,
+		Role:         request.Role,
+	}
+
+	err = s.userService.InsertUser(&user)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s *Service) Login(request LoginRequest) (*users.User, error) {
+	user, err := s.userService.FindByUserOrEmail(request.UsernameOrEmail)
 }
