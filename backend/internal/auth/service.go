@@ -16,7 +16,6 @@ func NewService(userService *users.Service) *Service {
 	return &Service{userService: userService}
 }
 
-// TODO: i had to go to work, will finish register and login functions
 func (s *Service) Register(request RegisterRequest) error {
 	user_user, user_err := s.userService.FindByUserOrEmail(request.Username)
 	email_user, email_err := s.userService.FindByUserOrEmail(request.Email)
@@ -59,4 +58,20 @@ func (s *Service) Register(request RegisterRequest) error {
 
 func (s *Service) Login(request LoginRequest) (*users.User, error) {
 	user, err := s.userService.FindByUserOrEmail(request.UsernameOrEmail)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if user == nil {
+		return nil, errors.New("Invalid Credentials")
+	}
+
+	err = bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(request.Password))
+
+	if err != nil {
+		return nil, errors.New("Invalid Credentials")
+	}
+
+	return user, nil
 }
