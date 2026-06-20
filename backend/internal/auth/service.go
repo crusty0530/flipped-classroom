@@ -2,9 +2,13 @@ package auth
 
 import (
 	"errors"
+	"os"
+	"time"
 
 	"github.com/crusty0530/flipped-classroom/backend/internal/users"
+	"github.com/google/uuid"
 
+	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -74,4 +78,17 @@ func (s *Service) Login(request LoginRequest) (*users.User, error) {
 	}
 
 	return user, nil
+}
+
+func (s *Service) GenerateJWTToken(id uuid.UUID, role users.Role) (string, error) {
+	claims := jwt.MapClaims{
+		"id":   id,
+		"role": role,
+		"exp":  time.Now().Add(time.Minute * 15).Unix(),
+		"iat":  time.Now().Unix(),
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+	return token.SignedString([]byte(os.Getenv("JWT_SECRET")))
 }
