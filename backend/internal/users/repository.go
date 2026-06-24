@@ -1,0 +1,41 @@
+package users
+
+import "database/sql"
+
+type Repository struct {
+	db *sql.DB
+}
+
+func NewRepository(db *sql.DB) *Repository {
+	return &Repository{db: db}
+}
+
+func (r *Repository) FindByUserOrEmail(value string) (*User, error) {
+	query := `SELECT id, username, email, password_hash, display_name, role, created_at
+			  FROM users
+			  WHERE username = $1 OR email = $1`
+
+	row := r.db.QueryRow(query, value)
+
+	var user User
+	err := row.Scan(&user.ID, &user.Username, &user.Email, &user.PasswordHash, &user.DisplayName, &user.Role, &user.CreatedAt)
+
+	if err == sql.ErrNoRows {
+		return nil, nil
+	}
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &user, nil
+}
+
+func (r *Repository) InsertUser(user *User) error {
+	query := `INSERT INTO users (username, email, password_hash, display_name, role)
+			  VALUES ($1, $2, $3, $4, $5)`
+
+	_, err := r.db.Exec(query, user.Username, user.Email, user.PasswordHash, user.DisplayName, user.Role)
+
+	return err
+}
